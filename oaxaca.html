@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗺️ OPERACIÓN OMEGA — OAXACA | @tacotios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #030307 0%, #1a1a1e 100%);
+            color: #F3EDE8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #030307 0%, #1a1a1e 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid #E99B2A;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            margin-bottom: 0.5rem;
+            color: #F97316;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            color: #E99B2A;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            max-width: 400px;
+            margin: 1rem auto 0;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid #E99B2A;
+            border-radius: 6px;
+            background: rgba(243, 237, 232, 0.1);
+            color: #F3EDE8;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #F97316;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+        }
+
+        .search-container input::placeholder {
+            color: #E99B2A;
+            opacity: 0.7;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .stat-item {
+            background: rgba(233, 155, 42, 0.1);
+            border: 1px solid #E99B2A;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #F97316;
+        }
+
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: #E99B2A;
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .summary-section {
+            background: rgba(233, 155, 42, 0.05);
+            border: 2px solid #E99B2A;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-section h2 {
+            color: #F97316;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .summary-section p {
+            margin-bottom: 0.8rem;
+            color: #F3EDE8;
+            opacity: 0.9;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: rgba(3, 3, 7, 0.5);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .summary-table thead {
+            background: linear-gradient(135deg, #E99B2A 0%, #F97316 100%);
+        }
+
+        .summary-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #030307;
+            font-size: 0.9rem;
+        }
+
+        .summary-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #E99B2A;
+            color: #F3EDE8;
+        }
+
+        .summary-table tr:hover {
+            background: rgba(233, 155, 42, 0.1);
+        }
+
+        .accordion {
+            margin-bottom: 2rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            background: rgba(26, 26, 30, 0.8);
+            border: 1px solid #E99B2A;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, rgba(233, 155, 42, 0.2) 0%, rgba(249, 115, 22, 0.2) 100%);
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #E99B2A;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(233, 155, 42, 0.3) 0%, rgba(249, 115, 22, 0.3) 100%);
+        }
+
+        .accordion-header h3 {
+            font-size: 1.1rem;
+            color: #F97316;
+            font-weight: 600;
+        }
+
+        .accordion-header .toggle {
+            color: #E99B2A;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            font-weight: 300;
+        }
+
+        .accordion-item.active .toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+            max-height: none;
+        }
+
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(3, 3, 7, 0.5);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .category-table thead {
+            background: linear-gradient(135deg, #E99B2A 0%, #F97316 100%);
+        }
+
+        .category-table th {
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            color: #030307;
+            font-size: 0.85rem;
+        }
+
+        .category-table td {
+            padding: 0.7rem;
+            border-bottom: 1px solid rgba(233, 155, 42, 0.3);
+            color: #F3EDE8;
+            font-size: 0.9rem;
+        }
+
+        .category-table tr:hover {
+            background: rgba(233, 155, 42, 0.15);
+        }
+
+        .score-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #E99B2A 0%, #F97316 100%);
+            color: #030307;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #E99B2A;
+            border-top: 1px solid #E99B2A;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 1rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #E99B2A 0%, #F97316 100%);
+            color: #030307;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-weight: 700;
+        }
+
+        .scroll-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+        }
+
+        .scroll-to-top.show {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .summary-table,
+            .category-table {
+                font-size: 0.85rem;
+            }
+
+            .summary-table th,
+            .category-table th {
+                padding: 0.6rem;
+            }
+
+            .summary-table td,
+            .category-table td {
+                padding: 0.5rem;
+            }
+
+            .accordion-header h3 {
+                font-size: 0.95rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #E99B2A;
+            font-style: italic;
+        }
+
+        .venue-type {
+            display: inline-block;
+            background: rgba(233, 155, 42, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            color: #E99B2A;
+            margin-right: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #F97316;
+            margin: 2rem 0 1.5rem;
+            border-bottom: 2px solid #E99B2A;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗺️ OPERACIÓN OMEGA — OAXACA</h1>
+        <p>50+ Lugares • Guía Gastronómica Definitiva para @tacotios</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre, tipo, zona...">
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="number">50+</div>
+            <div class="label">Venues</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">7</div>
+            <div class="label">Categorías</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">5</div>
+            <div class="label">Michelin ★</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">6</div>
+            <div class="label">Regiones</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- SUMMARY SECTION -->
+        <div class="summary-section">
+            <h2>📍 Identidad Gastronómica de Oaxaca</h2>
+            <p><strong>Patrimonio Cultural Inmaterial de la Humanidad</strong> (UNESCO) — Oaxaca es la capital gastronómica de México, con tradiciones culinarias que datan de miles de años.</p>
+            <p>Los <strong>7 Moles</strong> (Negro, Rojo, Amarillo, Verde, Coloradito, Chichilo, Estofado) son la base de la identidad culinaria. Complementados por tlayudas, mezcal artesanal, chapulines, y chocolate Oaxaqueño que no existe en ningún otro lugar.</p>
+
+            <h3 style="color: #E99B2A; margin-top: 1.5rem; margin-bottom: 0.8rem;">Top 20 Venues Ranked</h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Zona</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Abigail Mendoza / Tlamanalli</strong></td>
+                        <td>Cocinera Tradicional</td>
+                        <td>Teotitlán del Valle</td>
+                        <td><span class="score-badge">98</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Levadura de Olla</strong></td>
+                        <td>Michelin ★</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">97</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Celia Florián / Las Quince Letras</strong></td>
+                        <td>Cocinera Tradicional</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">96</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Casa Oaxaca El Restaurante</strong></td>
+                        <td>Fine Dining / Michelin</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">95</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Criollo</strong></td>
+                        <td>Fine Dining</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">94</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><strong>Alfonsina</strong></td>
+                        <td>Chef Jorge León</td>
+                        <td>San Juan Bautista</td>
+                        <td><span class="score-badge">93</span></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><strong>Pitiona Cocina de Autor</strong></td>
+                        <td>Fine Dining</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">92</span></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><strong>Los Danzantes</strong></td>
+                        <td>Michelin ★ + Green Star</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">91</span></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><strong>Origen</strong></td>
+                        <td>Contemporary Oaxacan</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">90</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><strong>Nois</strong></td>
+                        <td>Contemporary / Cocktails</td>
+                        <td>Centro Histórico</td>
+                        <td><span class="score-badge">89</span></td>
+                    </tr></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MOLES & TRADITIONAL COOKS -->
+        <div class="section-title">🍫 Moles & Cocineras Tradicionales</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🍫 Moles & Cocineras Tradicionales (3 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Score</th>
+                                <th>Highlights</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Abigail Mendoza / Tlamanalli</strong></td>
+                                <td>Teotitlán del Valle</td>
+                                <td><span class="score-badge">98</span></td>
+                                <td>UNESCO, Bourdain, metate, 32+ awards</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Celia Florián / Las Quince Letras</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">96</span></td>
+                                <td>Netflix Street Food, Michelin Bib, 32 awards</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Antigua Cocina de Humo</strong></td>
+                                <td>Teotitlán del Valle</td>
+                                <td><span class="score-badge">87</span></td>
+                                <td>Chef Carina Santiago, smoke/clay pots</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TLAYUDAS & STREET FOOD -->
+        <div class="section-title">🌮 Tlayudas, Memelas & Street Food</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🌮 Tlayudas, Memelas & Street Food (8 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Score</th>
+                                <th>Especialidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mercado 20 de Noviembre</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">87</span></td>
+                                <td>Pasillo de Humo (68 años), Comedor Chabelita</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comedor Chabelita</strong></td>
+                                <td>Mercado 20 Nov</td>
+                                <td><span class="score-badge">80</span></td>
+                                <td>"Richest tlayudas", crowded breakfast spot</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comedor Marie Alejandra</strong></td>
+                                <td>Mercado 20 Nov</td>
+                                <td><span class="score-badge">79</span></td>
+                                <td>Super delicious, high-quality asiento (lard)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Candita's Comedor</strong></td>
+                                <td>Mercado 20 Nov</td>
+                                <td><span class="score-badge">78</span></td>
+                                <td>Tasajo tlayudas, everything good</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tlayudas La Chinita</strong></td>
+                                <td>Near Santo Domingo</td>
+                                <td><span class="score-badge">79</span></td>
+                                <td>Netflix Street Food: Latin America feature</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memelas San Agustín</strong></td>
+                                <td>Behind San Agustín Church</td>
+                                <td><span class="score-badge">78</span></td>
+                                <td>40-year tradition, cheese memelas, tasajo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memelas Florinda</strong></td>
+                                <td>Near Santo Domingo</td>
+                                <td><span class="score-badge">77</span></td>
+                                <td>Corner stand, always fresh, cheap</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tamales y Café Juanita</strong></td>
+                                <td>Near Mercado 20 Nov</td>
+                                <td><span class="score-badge">75</span></td>
+                                <td>Fresh tamales, café, breakfast spot</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEZCAL & DISTILLERIES -->
+        <div class="section-title">🥃 Mezcalerías & Destilerías</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🥃 Mezcalerías & Destilerías (11 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Score</th>
+                                <th>Tipo / Especialidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mezcal In Situ</strong></td>
+                                <td>Xaguía, Etla Valley</td>
+                                <td><span class="score-badge">94</span></td>
+                                <td>Mezcal production + gastronomy, Cortés family</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mezcalería Gutierrez</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">88</span></td>
+                                <td>50+ mezcals, traditional Oaxaca, Bourdain</td>
+                            </tr>
+                            <tr>
+                                <td><strong>La Guelaguetza Mezcalería</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">86</span></td>
+                                <td>Traditional selection, mole combinations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Destilado Mezcal Bar</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">85</span></td>
+                                <td>Tasting room, cocktails, education</td>
+                            </tr>
+                            <tr>
+                                <td><strong>La Casa Crespo</strong></td>
+                                <td>Tlacolula de Matamoros</td>
+                                <td><span class="score-badge">90</span></td>
+                                <td>Family mezcal producer, tours available</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Yachachume Mezcalería</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">84</span></td>
+                                <td>Craft cocktails + mezcal education</td>
+                            </tr>
+                            <tr>
+                                <td><strong>La Soledad Mezcalería</strong></td>
+                                <td>Tlacolula Valley</td>
+                                <td><span class="score-badge">83</span></td>
+                                <td>Artisanal mezcal + seasonal pechuga</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tinte Mezcalería</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">82</span></td>
+                                <td>Casual, craft cocktails, live music</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mezcal Nela</strong></td>
+                                <td>Xaguía, Etla Valley</td>
+                                <td><span class="score-badge">88</span></td>
+                                <td>Women-owned, high-quality pechuga</td>
+                            </tr>
+                            <tr>
+                                <td><strong>El Destilado Mezcal Shop</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">81</span></td>
+                                <td>Retail + tasting bar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mezcal Vago Tour</strong></td>
+                                <td>Santa María Atzompa</td>
+                                <td><span class="score-badge">85</span></td>
+                                <td>Distillery tour + production</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHOCOLATE & CHOCOLATE DRINKS -->
+        <div class="section-title">🍫 Chocolate & Bebidas Artesanales</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🍫 Chocolate Oaxaqueño & Bebidas (6 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Score</th>
+                                <th>Especialidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Xocolatl (Cacao)</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">91</span></td>
+                                <td>Traditional cacao preparation, UNESCO recipes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Café Crema</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">87</span></td>
+                                <td>Cacao drinks + pastries</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Casa Ternura Chocolate</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">89</span></td>
+                                <td>Artisanal chocolate-making classes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Taller de Cacao</strong></td>
+                                <td>Near Mercado 20 Nov</td>
+                                <td><span class="score-badge">86</span></td>
+                                <td>Cacao nibs, atole, tejate (ancient drink)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>La Soledad Café</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">84</span></td>
+                                <td>Coffee + Oaxaca chocolate combinations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mercado Abastos - Chocolate Row</strong></td>
+                                <td>Mercado Abastos</td>
+                                <td><span class="score-badge">79</span></td>
+                                <td>Fresh ground chocolate (ground while you wait)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MARKETS -->
+        <div class="section-title">🛒 Mercados & Grocery Experiences</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🛒 Essential Markets (3 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Mercado</th>
+                                <th>Ubicación</th>
+                                <th>Score</th>
+                                <th>Lo Imprescindible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mercado 20 de Noviembre</strong></td>
+                                <td>Centro Histórico</td>
+                                <td><span class="score-badge">87</span></td>
+                                <td>PASILLO DE HUMO - 68 años, tlayudas, quesillo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mercado Abastos</strong></td>
+                                <td>Abastos</td>
+                                <td><span class="score-badge">81</span></td>
+                                <td>Chocolate row, chapulines, mole paste</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Central de Abastos</strong></td>
+                                <td>South of Centro</td>
+                                <td><span class="score-badge">75</span></td>
+                                <td>Massive market, everything Oaxaca, haggling</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUSEUMS & EXPERIENCES -->
+        <div class="section-title">🎨 Cultural Experiences & Museums</div>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>🎨 Museum & Cultural Spots (4 venues)</h3>
+                    <span class="toggle">⌄</span>
+                </div>
+                <div class="accordion-content">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Score</th>
+                                <th>Por Qué Ir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Museo Textil</strong></td>
+                                <td>Museum</td>
+                                <td><span class="score-badge">88</span></td>
+                                <td>Oaxaca's weaving culture, indigenous techniques</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Santo Domingo Church</strong></td>
+                                <td>Historic Church</td>
+                                <td><span class="score-badge">90</span></td>
+                                <td>Baroque masterpiece, cultural heart of Oaxaca</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Guelaguetza Museum</strong></td>
+                                <td>Museum</td>
+                                <td><span class="score-badge">83</span></td>
+                                <td>Oaxaca traditions, folklore, indigenous culture</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Casa Benito Juárez</strong></td>
+                                <td>Historic House</td>
+                                <td><span class="score-badge">75</span></td>
+                                <td>Birthplace of Mexican president, small museum</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>🗺️ <strong>OPERACIÓN OMEGA — OAXACA</strong></p>
+        <p>Guía Gastronómica Definitiva • 50+ Venues • 7 Categorías</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">@tacotios • Febrero 2025</p>
+    </footer>
+
+    <button class="scroll-to-top" id="scrollBtn">↑</button>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const accordions = document.querySelectorAll('.accordion-header');
+        const categoryTables = document.querySelectorAll('.category-table tbody tr');
+        const summaryTableRows = document.querySelectorAll('.summary-table tbody tr');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            // Search in accordion headers
+            accordions.forEach(accordion => {
+                const text = accordion.textContent.toLowerCase();
+                accordion.parentElement.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+
+            // Search in category table rows
+            categoryTables.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? 'table-row' : 'none';
+            });
+
+            // Search in summary table rows
+            summaryTableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? 'table-row' : 'none';
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', (e) => {
+                const item = header.closest('.accordion-item');
+                item.classList.toggle('active');
+            });
+        });
+
+        // Scroll to top button
+        const scrollBtn = document.getElementById('scrollBtn');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Auto-expand first accordion on load
+        document.querySelector('.accordion-item')?.classList.add('active');
+    </script>
+</body>
+</html>
