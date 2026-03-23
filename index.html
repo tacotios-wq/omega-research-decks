@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operación Omega — @tacotios</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --negro: #030307; --ambar: #E99B2A; --orange: #F97316; --offwhite: #F3EDE8; }
+  body { font-family: 'Inter', sans-serif; background: var(--negro); color: var(--offwhite); min-height: 100vh; }
+  .hero { text-align: center; padding: 80px 24px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(233,155,42,0.08) 0%, transparent 60%); pointer-events: none; }
+  .hero-flag { font-size: 64px; margin-bottom: 16px; display: block; }
+  .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 8px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--ambar), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { font-size: 1.1rem; color: rgba(243,237,232,0.5); font-weight: 300; margin-top: 12px; }
+  .hero .badge { display: inline-block; margin-top: 20px; padding: 6px 16px; border: 1px solid rgba(233,155,42,0.3); border-radius: 100px; font-size: 0.8rem; color: var(--ambar); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+  .stats { display: flex; justify-content: center; gap: 48px; padding: 32px 24px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--ambar), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(243,237,232,0.4); margin-top: 4px; }
+  .grid-section { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+  .section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: rgba(243,237,232,0.35); margin-bottom: 24px; padding-left: 4px; }
+  .city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .city-card { background: rgba(243,237,232,0.04); border: 1px solid rgba(243,237,232,0.08); border-radius: 16px; padding: 28px 24px; text-decoration: none; color: var(--offwhite); transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; }
+  .city-card:hover { border-color: var(--ambar); background: rgba(233,155,42,0.06); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(233,155,42,0.1); }
+  .city-card::after { content: '\2192'; position: absolute; top: 28px; right: 24px; font-size: 1.2rem; color: rgba(243,237,232,0.2); transition: all 0.3s ease; }
+  .city-card:hover::after { color: var(--ambar); transform: translateX(4px); }
+  .city-name { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+  .city-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .city-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 100px; font-weight: 600; }
+  .tag-tier { background: rgba(233,155,42,0.15); color: var(--ambar); }
+  .tag-places { background: rgba(243,237,232,0.08); color: rgba(243,237,232,0.5); }
+  .city-identity { font-size: 0.85rem; color: rgba(243,237,232,0.4); line-height: 1.5; font-weight: 300; }
+  .pending-section { max-width: 1000px; margin: 0 auto; padding: 0 24px 80px; }
+  .pending-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pending-pill { padding: 8px 16px; border-radius: 100px; font-size: 0.8rem; color: rgba(243,237,232,0.3); border: 1px solid rgba(243,237,232,0.06); font-weight: 400; }
+  footer { text-align: center; padding: 40px 24px; border-top: 1px solid rgba(243,237,232,0.06); }
+  footer p { font-size: 0.75rem; color: rgba(243,237,232,0.25); letter-spacing: 1px; }
+  footer a { color: var(--ambar); text-decoration: none; }
+</style>
+</head>
+<body>
+<section class="hero"><span class="hero-flag">🇲🇽</span><h1><span>Operación Omega</span></h1><p>Research Decks gastronómicos de México — @tacotios</p><div class="badge">30 ciudades &bull; 300+ lugares</div></section>
+<section class="stats"><div class="stat"><div class="stat-num">8</div><div class="stat-label">Ciudades Completas</div></div><div class="stat"><div class="stat-num">300+</div><div class="stat-label">Lugares Investigados</div></div><div class="stat"><div class="stat-num">30</div><div class="stat-label">Ciudades Objetivo</div></div></section>
+<section class="grid-section"><div class="section-title">Ciudades con Research Decks</div><div class="city-grid">
+<a href="cdmx.html" class="city-card"><div class="city-name">CDMX</div><div class="city-meta"><span class="city-tag tag-tier">Tier S</span><span class="city-tag tag-places">79 lugares</span></div><div class="city-identity">Capital gastro mundial, tacos, fine dining, mercados</div></a>
+<a href="oaxaca.html" class="city-card"><div class="city-name">Oaxaca</div><div class="city-meta"><span class="city-tag tag-tier">Tier S</span><span class="city-tag tag-places">50+ lugares</span></div><div class="city-identity">Moles, mezcal, mercados, tradición zapoteca</div></a>
+<a href="merida.html" class="city-card"><div class="city-name">Mérida</div><div class="city-meta"><span class="city-tag tag-tier">Tier S</span><span class="city-tag tag-places">30 lugares</span></div><div class="city-identity">Yucateca ancestral, cochinita, nueva cocina</div></a>
+<a href="guadalajara.html" class="city-card"><div class="city-name">Guadalajara</div><div class="city-meta"><span class="city-tag tag-tier">Tier A</span><span class="city-tag tag-places">40+ lugares</span></div><div class="city-identity">Birria, torta ahogada, tequila, lonches</div></a>
+<a href="tijuana.html" class="city-card"><div class="city-name">Tijuana</div><div class="city-meta"><span class="city-tag tag-tier">Tier A</span><span class="city-tag tag-places">11 lugares</span></div><div class="city-identity">Baja Med, adobada, frontera, Caesar salad</div></a>
+<a href="puebla.html" class="city-card"><div class="city-name">Puebla</div><div class="city-meta"><span class="city-tag tag-tier">Tier A</span><span class="city-tag tag-places">40+ lugares</span></div><div class="city-identity">Mole poblano, cemitas, chiles en nogada</div></a>
+<a href="monterrey.html" class="city-card"><div class="city-name">Monterrey</div><div class="city-meta"><span class="city-tag tag-tier">Tier A</span><span class="city-tag tag-places">42 lugares</span></div><div class="city-identity">Cabrito, carne asada, machacado, nuevo NL</div></a>
+<a href="ensenada.html" class="city-card"><div class="city-name">Ensenada</div><div class="city-meta"><span class="city-tag tag-tier">Tier A</span><span class="city-tag tag-places">35+ lugares</span></div><div class="city-identity">Vino, mariscos, Baja Med, tacos de pescado</div></a>
+</div></section>
+<section class="pending-section"><div class="section-title">Próximamente</div><div class="pending-grid"><span class="pending-pill">San Cristóbal</span><span class="pending-pill">Mazatlán</span><span class="pending-pill">Veracruz</span><span class="pending-pill">Querétaro</span><span class="pending-pill">Morelia</span><span class="pending-pill">Puerto Vallarta</span><span class="pending-pill">San Luis Potosí</span><span class="pending-pill">Los Cabos</span><span class="pending-pill">Guanajuato</span><span class="pending-pill">San Miguel de Allende</span><span class="pending-pill">Campeche</span><span class="pending-pill">Villahermosa</span><span class="pending-pill">Hermosillo</span><span class="pending-pill">Toluca</span><span class="pending-pill">Tampico</span><span class="pending-pill">Colima</span><span class="pending-pill">Chihuahua</span><span class="pending-pill">Aguascalientes</span><span class="pending-pill">León</span><span class="pending-pill">Zacatecas</span><span class="pending-pill">Durango</span><span class="pending-pill">Tuxtla Gutiérrez</span></div></section>
+<footer><p>Operación Omega v6 &bull; <a href="https://instagram.com/tacotios" target="_blank">@tacotios</a> &bull; 2026</p></footer>
+</body>
+</html>
