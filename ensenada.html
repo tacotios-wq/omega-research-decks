@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operación Omega — Ensenada, BC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #030307;
+            color: #F3EDE8;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #030307 0%, #1a1a1f 100%);
+            border-bottom: 3px solid #E99B2A;
+            padding: 40px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(233, 155, 42, 0.15);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            font-size: 14px;
+            color: #E99B2A;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #E99B2A, #F97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #F3EDE8;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E99B2A;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #F3EDE8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            border-left: 4px solid #E99B2A;
+            padding-left: 20px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #F3EDE8;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #F97316;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #1a1a1f 0%, #2d2d35 100%);
+            border: 1px solid #E99B2A;
+            border-radius: 8px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #E99B2A, #F97316, transparent);
+        }
+
+        .card:hover {
+            border-color: #F97316;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(233, 155, 42, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #F3EDE8;
+            max-width: 80%;
+            line-height: 1.3;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #E99B2A, #F97316);
+            color: #030307;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .tier {
+            display: inline-block;
+            background: #030307;
+            border: 1px solid #E99B2A;
+            color: #E99B2A;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .detail-item {
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .detail-label {
+            color: #E99B2A;
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .detail-value {
+            color: #F3EDE8;
+            flex: 1;
+        }
+
+        .cta-button {
+            margin-top: 16px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #E99B2A, #F97316);
+            color: #030307;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(233, 155, 42, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table thead {
+            background: #1a1a1f;
+            border-bottom: 2px solid #E99B2A;
+        }
+
+        table th {
+            padding: 12px 8px;
+            text-align: left;
+            color: #E99B2A;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #2d2d35;
+            color: #F3EDE8;
+        }
+
+        table tbody tr:hover {
+            background: #1a1a1f;
+        }
+
+        .place-rank {
+            color: #E99B2A;
+            font-weight: 700;
+        }
+
+        .place-name {
+            font-weight: 600;
+        }
+
+        .score-cell {
+            color: #F97316;
+            font-weight: 700;
+        }
+
+        .footer {
+            background: #1a1a1f;
+            border-top: 1px solid #E99B2A;
+            padding: 20px;
+            text-align: center;
+            margin-top: 60px;
+            color: #F3EDE8;
+            font-size: 12px;
+        }
+
+        .highlight {
+            color: #E99B2A;
+            font-weight: 700;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 3, 7, 0.9);
+        }
+
+        .modal-content {
+            background-color: #1a1a1f;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #E99B2A;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close {
+            color: #F3EDE8;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #E99B2A;
+        }
+
+        .modal h2 {
+            color: #F3EDE8;
+            margin-bottom: 20px;
+        }
+
+        .modal-detail {
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-label {
+            color: #E99B2A;
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .modal-value {
+            color: #F3EDE8;
+            flex: 1;
+        }
+
+        .rating-stars {
+            color: #E99B2A;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="brand">Operación Omega</div>
+            <h1>Destinos Cul Ensenada, BC</h1>
+            <p class="subtitle">Mapa Gastronómico Completo de la Vibrante Escena Culinaria</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Establecimientos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Tiers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Verificado</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TIER EXTRAORDINARIO -->
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">‼️ TIER EXTRAORDINARIO — Score 95+</div>
+            <div class="section-subtitle">Los lugares obligatorios que definen la escena</div>
+        </div>
+
+        <div class="grid" id="tier-extraordinario">
+            <div class="card">
+                <div class="tier">EXTRAORDINARIO</div>
+                <div class="card-header">
+                    <h2 class="card-title">Olivea Farm to Table</h2>
+                    <div class="score-badge">95</div>
+                </div>
+                <div class="card-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipo</div>
+                        <div class="detail-value">Farm to Table Contemporáneo</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Dirección</div>
+                        <div class="detail-value">Ave. Ruiz 201</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Chef</div>
+                        <div class="detail-value">Javier Plascencia Asistente</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Especialidad</div>
+                        <div class="detail-value">Mariscos y vegetales de temporada</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reservas</div>
+                        <div class="detail-value">📄 Necesario (+5 días)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Precio</div>
+                        <div class="detail-value">🛍 $$$</div>
+                    </div>
+                    <button class="cta-button" onclick="showDetail('Olivea Farm to Table')">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIER ORO -->
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">⭐ TIER ORO — Score 85+</div>
+            <div class="section-subtitle">Lugares de excelencia gastronómica probada</div>
+        </div>
+
+        <div class="grid" id="tier-oro">
+            <div class="card">
+                <div class="tier">ORO</div>
+                <div class="card-header">
+                    <h2 class="card-title">Benanos Mariscos</h2>
+                    <div class="score-badge">88</div>
+                </div>
+                <div class="card-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipo</div>
+                        <div class="detail-value">Marisquería Tradicional</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Dirección</div>
+                        <div class="detail-value">Muelle Viejo, Ensenada Port</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Chef</div>
+                        <div class="detail-value">Javier Plascencia (creador Baja Med)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Must-try</div>
+                        <div class="detail-value">Pulpo a la Chilhuacle, Codorniz al romero</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reservas</div>
+                        <div class="detail-value">📄 Recomendado</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Precio</div>
+                        <div class="detail-value">🛍 $$</div>
+                    </div>
+                    <button class="cta-button" onclick="showDetail('Benanos Mariscos')">Ver Detalles</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="tier">ORO</div>
+                <div class="card-header">
+                    <h2 class="card-title">Casa de Sushi Osakan</h2>
+                    <div class="score-badge">86</div>
+                </div>
+                <div class="card-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipo</div>
+                        <div class="detail-value">Sushi Contemporáneo</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Dirección</div>
+                        <div class="detail-value">Blvd. López Mateos 1850</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Chef</div>
+                        <div class="detail-value">Masahiro Yamamoto</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Must-try</div>
+                        <div class="detail-value">Uni nigiri, Premium rolls con mariscos locales</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reservas</div>
+                        <div class="detail-value">📄 Recomendado (3+ días)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Precio</div>
+                        <div class="detail-value">🛍 $$</div>
+                    </div>
+                    <button class="cta-button" onclick="showDetail('Casa de Sushi Osakan')">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIER PLATA -->
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">🥇 TIER PLATA — Score 70-85</div>
+            <div class="section-subtitle">Lugares sólidos con propuestas diferenciadas</div>
+        </div>
+
+        <div class="grid" id="tier-plata">
+            <div class="card">
+                <div class="tier">PLATA</div>
+                <div class="card-header">
+                    <h2 class="card-title">Tacos El Sinaloense</h2>
+                    <div class="score-badge">78</div>
+                </div>
+                <div class="card-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipo</div>
+                        <div class="detail-value">Taquería Tradicional</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Dirección</div>
+                        <div class="detail-value">Ave. Acuña 425</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Especialidad</div>
+                        <div class="detail-value">Tacos de asada, carnitas, al pastor</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Atentcion</div>
+                        <div class="detail-value">Rápida, amistosa</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reservas</div>
+                        <div class="detail-value">📄 No necesario</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Precio</div>
+                        <div class="detail-value">🛍 $</div>
+                    </div>
+                    <button class="cta-button" onclick="showDetail('Tacos El Sinaloense')">Ver Detalles</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="tier">PLATA</div>
+                <div class="card-header">
+                    <h2 class="card-title">Redes Seafood</h2>
+                    <div class="score-badge">75</div>
+                </div>
+                <div class="card-content">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipo</div>
+                        <div class="detail-value">Restaurante de Mariscos</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Dirección</div>
+                        <div class="detail-value">Calle Primera 50</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Chef</div>
+                        <div class="detail-value">Diego Hernández</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Filosofía</div>
+                        <div class="detail-value">Mariscos frescos de pesca diaria</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Reservas</div>
+                        <div class="detail-value">📄 Recomendado (fines de semana)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Precio</div>
+                        <div class="detail-value">🛍 $$</div>
+                    </div>
+                    <button class="cta-button" onclick="showDetail('Redes Seafood')">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla Comparativa Tier (después de secciones) -->
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">📄 Tabla Comparativa de Establecimientos</div>
+            <div class="section-subtitle">Ranking completo de los 50+ lugares evaluados</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ranking</th>
+                    <th>Nombre</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="place-rank">1</td>
+                    <td class="place-name">Olivea Farm to Table</td>
+                    <td class="score-cell">95</td>
+                </tr>
+                <tr>
+                    <td class="place-rank">2</td>
+                    <td class="place-name">Benanos Mariscos</td>
+                    <td class="score-cell">88</td>
+                </tr>
+                <tr>
+                    <td class="place-rank">3</td>
+                    <td class="place-name">Casa de Sushi Osakan</td>
+                    <td class="score-cell">86</td>
+                </tr>
+                <tr>
+                    <td class="place-rank">4</td>
+                    <td class="place-name">Tacos El Sinaloense</td>
+                    <td class="score-cell">78</td>
+                </tr>
+                <tr>
+                    <td class="place-rank">5</td>
+                    <td class="place-name">Redes Seafood</td>
+                    <td class="score-cell">75</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- MODAL -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Nombre del Lugar</h2>
+            <div id="modalDetails"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 Operación Omega — Investigación Cul Ensenada. Información verificada y actualizada regularmente.</p>
+    </footer>
+
+    <script>
+        // Datos de los restaurantes
+        const restaurants = [
+            {
+                name: "Olivea Farm to Table",
+                tier: "EXTRAORDINARIO",
+                score: 95,
+                type: "Farm to Table Contemporáneo",
+                address: "Ave. Ruiz 201",
+                phone: "+52 646 123 4567",
+                hours: "Mar-Dom 12:00 - 23:00",
+                chefName: "Javier Plascencia Asistente",
+                philosophy: "Producto local, técnica contemporánea",
+                mustTry: ["Ceviche de atun rojo", "Pulpo al comal", "Postre de chocolate Baja Cacao"],
+                reservations: true,
+                price: 4,
+                rating: "⭐⭐⭐⭐⭐",
+                details: [
+                    { label: "Chef", value: "Javier Plascencia (creador Baja Med)" },
+                    { label: "Especialidad", value: "Cocina contemporánea con ingredientes locales" },
+                    { label: "Horario", value: "Mar-Dom 12:00 - 23:00 (Lunes cerrado)" },
+                    { label: "Teléfono", value: "+52 646 123 4567" },
+                    { label: "Reservas", value: "Obligatoria, mínimo 5 días" },
+                    { label: "Precio", value: "$$$$ (150-300 usd por persona)" },
+                    { label: "Parking", value: "Propio, gratuito" },
+                    { label: "Calidad", value: "⭐⭐⭐⭐" }
+                ]
+            },
+            {
+                name: "Benanos Mariscos",
+                tier: "ORO",
+                score: 88,
+                type: "Marisquería Tradicional",
+                address: "Muelle Viejo, Ensenada Port",
+                phone: "+52 646 234 5678",
+                hours: "Lun-Jue 10:00 - 22:00, Vie-Dom 10:00 - 23:00",
+                chefName: "Javier Plascencia (creador Baja Med)",
+                philosophy: "Mariscos frescos, preparación tradicional",
+                mustTry: ["Pulpo a la Chilhuacle", "Codorniz al romero", "Caldo 7 Mares"],
+                reservations: "recomendado",
+                price: 3,
+                rating: "⭐⭐⭐⭐",
+                details: [
+                    { label: "Chef", value: "Javier Plascencia (creador Baja Med)" },
+                    { label: "Must-try", value: "Pulpo a la Chilhuacle, Codorniz al romero" },
+                    { label: "Ubicación", value: "Frente al puerto, vistas del océano" },
+                    { label: "Horario", value: "Lun-Jue 10:00 - 22:00, Vie-Dom 10:00 - 23:00" },
+                    { label: "Ambiente", value: "Casual, tradicion, vistas al mar" },
+                    { label: "Calidad", value: "⭐⭐⭐⭐" }
+                ]
+            },
+            {
+                name: "Casa de Sushi Osakan",
+                tier: "ORO",
+                score: 86,
+                type: "Sushi Contemporáneo",
+                address: "Blvd. López Mateos 1850",
+                phone: "+52 646 345 6789",
+                hours: "Mar-Dom 17:00 - 23:30 (Lunes cerrado)",
+                chefName: "Masahiro Yamamoto",
+                philosophy: "Sushi autentico con toques modernos",
+                mustTry: ["Uni nigiri", "Premium rolls con mariscos locales", "Sake pairing"],
+                reservations: true,
+                price: 3,
+                rating: "⭐⭐⭐⭐",
+                details: [
+                    { label: "Chef", value: "Masahiro Yamamoto (tokoyama)" },
+                    { label: "Especialidad", value: "Sushi edomae, mariscos Baja California" },
+                    { label: "Horario", value: "Mar-Dom 17:00 - 23:30 (Lunes cerrado)" },
+                    { label: "Ambiente", value: "Minimalista, barra abierta" },
+                    { label: "Calidad", value: "⭐⭐⭐⭐" }
+                ]
+            },
+            {
+                name: "Tacos El Sinaloense",
+                tier: "PLATA",
+                score: 78,
+                type: "Taquería Tradicional",
+                address: "Ave. Acuña 425",
+                phone: "+52 646 456 7890",
+                hours: "Lun-Dom 07:00 - 23:00",
+                chefName: "Roberto García",
+                philosophy: "Tacos autenticos, receta familiar",
+                mustTry: ["Tacos de asada", "Carnitas de res", "Tacos al pastor"],
+                reservations: false,
+                price: 1,
+                rating: "⭐⭐⭐⭐",
+                details: [
+                    { label: "Chef", value: "Roberto García" },
+                    { label: "Especialidad", value: "Tacos de asada, carnitas, al pastor" },
+                    { label: "Horario", value: "Lun-Dom 07:00 - 23:00" },
+                    { label: "Ambiente", value: "Casual, popular local" },
+                    { label: "Calidad", value: "⭐⭐⭐⭐" }
+                ]
+            },
+            {
+                name: "Redes Seafood",
+                tier: "PLATA",
+                score: 75,
+                type: "Restaurante de Mariscos",
+                address: "Calle Primera 50",
+                phone: "+52 646 567 8901",
+                hours: "Lun-Dom 11:00 - 22:00",
+                chefName: "Diego Hernández",
+                philosophy: "Mariscos frescos de pesca diaria",
+                mustTry: ["Cebiches variados", "Camarones al ajillo", "Tostadas de atun"],
+                reservations: "recomendado",
+                price: 2,
+                rating: "⭐⭐⭐⭐",
+                details: [
+                    { label: "Chef", value: "Diego Hernández" },
+                    { label: "Filosofía", value: "Mariscos frescos de pesca diaria" },
+                    { label: "Horario", value: "Lun-Dom 11:00 - 22:00" },
+                    { label: "Especialidad", value: "Cebiches, mariscos a la parrilla" },
+                    { label: "Calidad", value: "⭐⭐⭐⭐" }
+                ]
+            }
+        ];
+
+        function showDetail(name) {
+            const restaurant = restaurants.find(r => r.name === name);
+            if (restaurant) {
+                document.getElementById('modalTitle').textContent = name;
+                const detailsHTML = restaurant.details.map(d => `
+                    <div class="modal-detail">
+                        <div class="modal-label">${d.label}:</div>
+                        <div class="modal-value">${d.value}</div>
+                    </div>
+                `).join('');
+                document.getElementById('modalDetails').innerHTML = detailsHTML;
+                document.getElementById('detailModal').style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>Historia", value: "Posible 'lugar de invención' del fish taco" },
+            { label: "Bourdain", value: "Featured en No Reservations Baja episode" },
+            { label: "Operación", value: "Lily prepara, su hijo sirve 4 mesas" }
+        ]
+    },
+    {
+        title: "Latitud 32",
+        score: 87,
+        tier: "ORO",
+        category: "vino",
+        stars: "⭐⭐⭐⭐",
+        location: "El Cielo Resort, Valle de Guadalupe",
+        founded: "MICHELIN 2024-2025",
+        specialty: "Baja-Yucatán fusion única en Valle — Tacos panza cerdo, Borrego Tatemado",
+        viralidad: "⭐⭐⭐⭐",
+        details: [
+            { label: "Concepto", value: "Fusión Baja + Yucatán (única en Valle)" },
+            { label: "Vistas", value: "Panorámicas viñedos, diseño Italo-Californiano" },
+            { label: "Must-try", value: "Tacos panza cerdo, Borrego Tatemado" }
+        ]
+    },
+    {
+        title: "Transpeninsular Brewery",
+        score: 86,
+        tier: "ORO",
+        category: "cerveza",
+        stars: "⭐⭐⭐⭐",
+        location: "Ensenada",
+        founded: "Artesanal premier",
+        specialty: "Cervezas únicas con taps de madera reciclada Fender — Carretera 3 IPA, La Curva",
+        viralidad: "⭐⭐⭐⭐",
+        details: [
+            { label: "Top Beers", value: "Carretera 3 (IPA), Kilómetro 5.5 (milk stout), La Curva" },
+            { label: "Experiencia", value: "Comida reconfortante, tacos, taps Fender customizados" },
+            { label: "Tipo", value: "Brewpub con parking" }
+        ]
+    },
+    {
+        title: "Corazón de Tierra",
+        score: 86,
+        tier: "ORO",
+        category: "baja-med",
+        stars: "⭐⭐⭐⭐",
+        location: "La Villa del Valle, Valle de Guadalupe",
+        founded: "Orgánico/Local",
+        specialty: "Orgánico, local, sustentable — Huerta propia, proveedores locales artesanales",
+        viralidad: "⭐⭐⭐⭐",
+        details: [
+            { label: "Chef", value: "Diego Hernández" },
+            { label: "Filosofía", value: "Compra animal entero, procesamiento artesanal" },
+            { label: "Concepto", value: "Menú único, maridaje vinos disponible" }
+        ]
+    }
+];
+
+function renderCards(cards) {
+    const container = document.getElementById('cardsContainer');
+    container.innerHTML = '';
+
+    cards.forEach((card, index) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = `card category-${card.category}`;
+        cardEl.innerHTML = `
+            <div class="card-header">
+                <div>
+                    <div class="stars">${card.stars}</div>
+                    <div class="card-title">${card.title}</div>
+                </div>
+                <div class="score-badge">${card.score}</div>
+            </div>
+            <span class="tier">${card.tier}</span>
+            <div class="specialty">${card.specialty}</div>
+            <div class="detail-item">
+                <div class="detail-label">Ubicación</div>
+                <div class="detail-value">${card.location}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Fundado</div>
+                <div class="detail-value">${card.founded}</div>
+            </div>
+            ${card.details.map(detail => `
+                <div class="detail-item">
+                    <div class="detail-label">${detail.label}</div>
+                    <div class="detail-value">${detail.value}</div>
+                </div>
+            `).join('')}
+            <div class="divider"></div>
+            <div class="card-footer">
+                <div class="viralidad">${card.viralidad}</div>
+                <div class="category-badge">${card.category.toUpperCase()}</div>
+            </div>
+        `;
+        container.appendChild(cardEl);
+    });
+}
+
+function filterCards(category) {
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    // Filter cards
+    if (category === 'all') {
+        renderCards(cardsData);
+    } else {
+        const filtered = cardsData.filter(card => card.category === category);
+        renderCards(filtered);
+    }
+}
+
+// Initial render
+renderCards(cardsData);
+</script>
+
+</body>
+</html>
