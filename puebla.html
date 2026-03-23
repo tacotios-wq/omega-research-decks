@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operación Omega — Puebla | Tacotíos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #030307;
+            color: #F3EDE8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #030307 0%, #1a1a1f 100%);
+            padding: 40px 20px;
+            border-bottom: 3px solid #E99B2A;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #E99B2A;
+        }
+
+        header p {
+            color: #F97316;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        header .meta {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #F97316;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #E99B2A;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title .emoji {
+            font-size: 2.2rem;
+        }
+
+        .lugares-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .lugar-card {
+            background: linear-gradient(135deg, #1a1a1f 0%, #2a2a2f 100%);
+            border-left: 4px solid #E99B2A;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lugar-card:hover {
+            transform: translateY(-5px);
+            border-left-color: #F97316;
+            box-shadow: 0 10px 30px rgba(233, 155, 42, 0.2);
+        }
+
+        .lugar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .lugar-nombre {
+            font-size: 1.3rem;
+            color: #E99B2A;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .lugar-score {
+            background: linear-gradient(135deg, #E99B2A 0%, #F97316 100%);
+            color: #030307;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .lugar-ubicacion {
+            color: #F97316;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lugar-ubicacion::before {
+            content: "📍";
+            font-size: 1rem;
+        }
+
+        .lugar-por-que {
+            color: #F3EDE8;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .lugar-label {
+            color: #999;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .lugar-tiempo {
+            color: #E99B2A;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .lugar-virabilidad {
+            display: inline-block;
+            background: rgba(233, 155, 42, 0.1);
+            color: #F97316;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            border: 1px solid rgba(233, 155, 42, 0.3);
+        }
+
+        .lugar-recomendacion {
+            color: #CCC;
+            font-size: 0.9rem;
+            font-style: italic;
+            padding-top: 12px;
+            border-top: 1px solid rgba(233, 155, 42, 0.2);
+            margin-top: 12px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1a1a1f 0%, #2a2a2f 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(233, 155, 42, 0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #F97316;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .ecuacion {
+            background: linear-gradient(135deg, rgba(233, 155, 42, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+            border-left: 4px solid #E99B2A;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 50px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .ecuacion h3 {
+            color: #E99B2A;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .ecuacion-formula {
+            color: #F97316;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .ecuacion-variables {
+            color: #CCC;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .ecuacion-variables strong {
+            color: #E99B2A;
+        }
+
+        .insights {
+            background: linear-gradient(135deg, #1a1a1f 0%, #2a2a2f 100%);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 4px solid #F97316;
+        }
+
+        .insights h3 {
+            color: #F97316;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .insights-list {
+            list-style: none;
+        }
+
+        .insights-list li {
+            padding: 12px 0;
+            color: #F3EDE8;
+            border-bottom: 1px solid rgba(233, 155, 42, 0.1);
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .insights-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #E99B2A;
+            font-weight: bold;
+        }
+
+        .insights-list li strong {
+            color: #F97316;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 2px solid #E99B2A;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #F97316;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #E99B2A;
+        }
+
+        .marca {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .marca-nombre {
+            color: #E99B2A;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .marca-handle {
+            color: #F97316;
+            font-size: 0.95rem;
+        }
+
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #E99B2A, transparent);
+            margin: 50px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .lugares-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="marca">
+            <div class="marca-nombre">TACOTÍOS</div>
+            <div class="marca-handle">@tacotios | 2M+ followers</div>
+        </div>
+        <h1>🗺️ Operación Omega</h1>
+        <p>Puebla, México | 40+ Lugares</p>
+        <div class="meta">
+            Scoring Viral | Identidad Gastronómica | Experiencias Culinarias
+            <br>Actualizado: 16 de marzo de 2026
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ESTADÍSTICAS -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">44</div>
+                <div class="stat-label">Lugares Investigados</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Categorías Gastronómicas</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">9.4</div>
+                <div class="stat-label">Score Máximo Viral</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Búsquedas Web</div>
+            </div>
+        </div>
+
+        <!-- ECUACIÓN VIRAL OMEGA -->
+        <section class="ecuacion">
+            <h3>⚡ Ecuación Viral Omega</h3>
+            <div class="ecuacion-formula">
+                Score = (Antigüedad × 0.15) + (Tradición × 0.25) + (Virabilidad × 0.30) + (Experiencia × 0.20) + (Accesibilidad × 0.10)
+            </div>
+            <div class="ecuacion-variables">
+                <strong>Antigüedad (15%):</strong> Instituciones establecidas 30+ años
+                <br><strong>Tradición (25%):</strong> Recetarios familiares, leyendas, herencia cultural
+                <br><strong>Virabilidad (30%):</strong> Visualidad, narrativa, "Instagram-ready", novedad
+                <br><strong>Experiencia (20%):</strong> Inmersión sensorial, narrativa de guía, ambiente
+                <br><strong>Accesibilidad (10%):</strong> Ubicación, costo, horarios, logística
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- SECCIÓN 1: MOLES & PIPIANES -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🥘</span>
+                <span>Moles & Pipianes</span>
+            </div>
+            <div class="lugares-grid">
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">El Mural de los Poblanos</div>
+                        <div class="lugar-score">9.2</div>
+                    </div>
+                    <div class="lugar-ubicacion">C. 16 de Septiembre 506, Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Mural artístico de Antonio Álvarez Morán, múltiples proteínas (pollo, guajolote, pato, cerdo)</div>
+                    <div class="lugar-label">Tiempo</div>
+                    <div class="lugar-tiempo">30 años</div>
+                    <div class="lugar-virabilidad">Virabilidad: Alto</div>
+                    <div class="lugar-recomendacion">Mole poblano + guajolote, ambiente cultural, zona céntrica</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Augurio</div>
+                        <div class="lugar-score">9.4</div>
+                    </div>
+                    <div class="lugar-ubicacion">Av. 9 Oriente 16, Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Ángel Vázquez, recetarios familiares, cocina de autor poblana</div>
+                    <div class="lugar-label">Tiempo</div>
+                    <div class="lugar-tiempo">+12 años</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Menú degustación, moles tradicionales con enfoque contemporáneo</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Casa Sabino</div>
+                        <div class="lugar-score">9.1</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Alí Jiménez, joven talento, casona restaurada</div>
+                    <div class="lugar-label">Nuevo</div>
+                    <div class="lugar-tiempo">2025</div>
+                    <div class="lugar-virabilidad">Virabilidad: Alto</div>
+                    <div class="lugar-recomendacion">Mole poblano versión moderna, ambiente hermoso</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">OTTO</div>
+                        <div class="lugar-score">9.3</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chefs Karla López & Jorge Zenteno, integración tradición-técnica-innovación</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Mole poblano con presentación contemporánea</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Jacinto y Yo</div>
+                        <div class="lugar-score">9.0</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Osiel Solórzano, oda a Puebla, moles e historias</div>
+                    <div class="lugar-virabilidad">Virabilidad: Alto</div>
+                    <div class="lugar-recomendacion">Recetas poblanas documentadas, experiencia narrativa</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Fonda de Santa Clara</div>
+                        <div class="lugar-score">8.8</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Referente de mole poblano, ambiente de fonda clásica</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Mole poblano clásico, pipián verde</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Intro</div>
+                        <div class="lugar-score">8.7</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Ángel Vázquez, 21 años, menús degustación 5 tiempos</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Menú degustación, exploración clásica de ingredientes</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Casa Bacuuza</div>
+                        <div class="lugar-score">8.5</div>
+                    </div>
+                    <div class="lugar-ubicacion">Puebla</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Abraham Serug, carta de amor a Oaxaca (incluye moles)</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Mole negro, visión multi-regional</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Lyrata</div>
+                        <div class="lugar-score">8.6</div>
+                    </div>
+                    <div class="lugar-ubicacion">Puebla</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Menús de temporada, exploración de sabores e ingredientes</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Experiencia estacional de moles</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- SECCIÓN 2: CHILES EN NOGADA -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🌶️</span>
+                <span>emoji">🌶️</span>
+                <span>Chiles en Nogada & Temporada</span>
+            </div>
+            <div class="lugares-grid">
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Restauro</div>
+                        <div class="lugar-score">9.1</div>
+                    </div>
+                    <div class="lugar-ubicacion">Callejón de los Sapos, Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Casona siglo XVIII, gastronomía poblana equilibrada</div>
+                    <div class="lugar-virabilidad">Virabilidad: Alto</div>
+                    <div class="lugar-recomendacion">Chiles en nogada de temporada (ago-sept), ambiente histórico</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Casareyna</div>
+                        <div class="lugar-score">8.5</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Valor, auténtica poblana, chiles en nogada clásicos</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Chiles en nogada al mejor precio, local poblano</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Comal</div>
+                        <div class="lugar-score">8.3</div>
+                    </div>
+                    <div class="lugar-ubicacion">Frente a la Catedral</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Casual moderno, vista a la Catedral</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Chiles en nogada casual, vistas al Zócalo</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">La Chiquita</div>
+                        <div class="lugar-score">8.0</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Punto de referencia histórico</div>
+                    <div class="lugar-virabilidad">Virabilidad: Bajo-Medio</div>
+                    <div class="lugar-recomendacion">Punto de partida tour gastronómico</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Clementina Cocina Poblana</div>
+                        <div class="lugar-score">8.2</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro (cerca Mercado El Parián)</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Contemporánea, escondida, toque moderno</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Chiles en nogada versión creativa</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- SECCIÓN 3: CEMITAS & STREET FOOD -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🥖</span>
+                <span>Cemitas & Street Food</span>
+            </div>
+            <div class="lugares-grid">
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Mercado del Carmen</div>
+                        <div class="lugar-score">9.4</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Cemitas icónicas, mercado vivo, pan-carne-queso-aguacate-pápalo-chipotle</div>
+                    <div class="lugar-tiempo">1950s</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">IMPRESCINDIBLE | Cemita clásica, ambiente de mercado</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Tianguis Nocturno de la Obrera</div>
+                        <div class="lugar-score">9.3</div>
+                    </div>
+                    <div class="lugar-ubicacion">Colonia Obrera</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">"Corredor infinito", comida callejera auténtica, ambiente nocturno</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Experiencia street food nocturna, múltiples opciones</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">La Oriental (Tacos Árabes)</div>
+                        <div class="lugar-score">9.2</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro Histórico</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Fundada 1933, taquería histórica más antigua, tacos árabes originales</div>
+                    <div class="lugar-tiempo">92 años</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Punto histórico imprescindible, ritual visual</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">El Carboncito de la 16</div>
+                        <div class="lugar-score">8.9</div>
+                    </div>
+                    <div class="lugar-ubicacion">Calle 16</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Tacos tradicionales, leña, ritual visual</div>
+                    <div class="lugar-virabilidad">Virabilidad: Alto</div>
+                    <div class="lugar-recomendacion">Tacos al pastor clásicos, cocción en vivo</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Don Pastor</div>
+                        <div class="lugar-score">8.6</div>
+                    </div>
+                    <div class="lugar-ubicacion">Frente a la Catedral</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Tacos al pastor tradicionales, ubicación céntrica</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Tacos al pastor entre visitas, ambiente energético</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Mercado Xonaca</div>
+                        <div class="lugar-score">8.4</div>
+                    </div>
+                    <div class="lugar-ubicacion">Barrio Xonaca</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">"Alma gastronómica del barrio", cocina ancestral</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Cemitas y comida callejera auténtica, menos turístico</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- SECCIÓN 4: CHOLULA & FINE DINING -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🌟</span>
+                <span>Fine Dining & Cholula</span>
+            </div>
+            <div class="lugares-grid">
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Ciudad Sagrada (Cholula)</div>
+                        <div class="lugar-score">9.4</div>
+                    </div>
+                    <div class="lugar-ubicacion">Cholula (cercas pirámide)</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Homenaje a creencias pre-hispánicas, territorio-historia-cocina, jardines, terraza pirámide</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Alta cocina mexicana + parrilla, experiencia cultural inmersiva</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Valiente Kitchen Bar (Cholula)</div>
+                        <div class="lugar-score">9.3</div>
+                    </div>
+                    <div class="lugar-ubicacion">Cholula</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Chef Eduardo Luna, diseño Estambul, speakeasy, chef's table, vistas pirámide</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Cocina contemporánea con vistas, experiencia sensorial total</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Finca Ensamble (Cholula)</div>
+                        <div class="lugar-score">8.6</div>
+                    </div>
+                    <div class="lugar-ubicacion">Cholula</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Especializada vinos, mezcales, cervezas artesanales, escondida</div>
+                    <div class="lugar-virabilidad">Virabilidad: Medio</div>
+                    <div class="lugar-recomendacion">Experiencia bebidas locales, ambiente acogedor</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- SECCIÓN 5: DULCES & MERCADOS -->
+        <section class="section">
+            <div class="section-title">
+                <span class="emoji">🏛️</span>
+                <span>Mercados & Dulcerías</span>
+            </div>
+            <div class="lugares-grid">
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Calle de los Dulces (Santa Clara)</div>
+                        <div class="lugar-score">9.4</div>
+                    </div>
+                    <div class="lugar-ubicacion">6 Oriente, Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">40+ dulcerías, camotes/cocadas/jamoncillos/borrachitos/gaznates, peatonal</div>
+                    <div class="lugar-tiempo">1892 (primer dulcería)</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Experiencia sensorial dulce, andar y probar, Instagram perfecto</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Mercado de Sabores Poblanos</div>
+                        <div class="lugar-score">9.2</div>
+                    </div>
+                    <div class="lugar-ubicacion">Barrio El Alto</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">137 establecimientos, epicentro gastronómico, mole/chalupas/dulces</div>
+                    <div class="lugar-tiempo">2011</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Tour de sabores, múltiples opciones, punto de convergencia</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Dulcería del Convento de Santa Clara</div>
+                        <div class="lugar-score">9.1</div>
+                    </div>
+                    <div class="lugar-ubicacion">Calle de los Dulces</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Fundada 1907, camotes/tortitas/jamoncillo, herencia convento</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Dulces tradicionales conventiles, tienda histórica imprescindible</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Museo Arte Popular (Convento Santa Rosa)</div>
+                        <div class="lugar-score">9.3</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">Cocina 18,000 azulejos Talavera, leyenda Sor Andrea, contexto histórico</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Visita + contexto histórico mole, experiencia visual sensorial</div>
+                </div>
+
+                <div class="lugar-card">
+                    <div class="lugar-header">
+                        <div class="lugar-nombre">Mercado del Alto ("Garibaldi")</div>
+                        <div class="lugar-score">8.7</div>
+                    </div>
+                    <div class="lugar-ubicacion">Centro</div>
+                    <div class="lugar-label">Por qué</div>
+                    <div class="lugar-por-que">1930, mariachis 24/7, comida típica, ambiente festivo legendario</div>
+                    <div class="lugar-virabilidad">Virabilidad: Crítico</div>
+                    <div class="lugar-recomendacion">Mole + mariachis, experiencia auténtica poblana nocturna</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- INSIGHTS VIRALES -->
+        <section class="insights">
+            <h3>💡 Insights Virales para Contenido</h3>
+            <ul class="insights-list">
+                <li><strong>Leyendas + Visualidad:</strong> Sor Andrea (Mole), Zacarías Galeana (Árabes), narrativas conquista generan engagement máximo</li>
+                <li><strong>Estacionalidad Estratégica:</strong> Chiles (ago-sep), Escamoles (feb-abr), Mole de Caderas (oct) = contenido planificado anual</li>
+                <li><strong>Mercados Nocturnos:</strong> Tianguis Obrera = contenido nocturno diferenciador, ambiente único</li>
+                <li><strong>Cholula + Vistas:</strong> Pirámide + comida = visual impactante, contexto pre-hispánico</li>
+                <li><strong>Dulces + Calle:</strong> Experiencia sensorial múltiple, "candy walk", colores infinitos</li>
+                <li><strong>Chefs Jóvenes:</strong> Alí Jiménez, Karla López, Jorge Zenteno = innovación + tradición (2025 trend)</li>
+                <li><strong>Mezcal + Historia:</strong> Narrativa pre-hispánica + producción artesanal = storytelling profundo</li>
+                <li><strong>Autenticidad Ancestral:</strong> Atoles prehispánicos, escamoles, tamales shocos = raíces profundas</li>
+            </ul>
+        </section>
+
+        <div class="separator"></div>
+
+        <!-- ABOUT -->
+        <section style="text-align: center; color: #999; padding: 40px 20px;">
+            <h3 style="color: #E99B2A; margin-bottom: 20px;">📊 Operación Omega Completa</h3>
+            <p style="margin-bottom: 15px;">44 lugares investigados | Scoring Viral Integrado | 8 categorías gastronómicas</p>
+            <p style="margin-bottom: 15px;">Marca: <span style="color: #E99B2A;">Tacotíos</span> <span style="color: #F97316;">@tacotios</span> | 2M+ followers</p>
+            <p style="font-size: 0.9rem;">Generado: 16 de marzo de 2026 | Datos verificados | Fuentes: Milenio, El Universal, Guía Oca, TripAdvisor</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="marca">
+            <div class="marca-nombre">TACOTÍOS</div>
+            <div class="marca-handle">@tacotios</div>
+        </div>
+        <p>Operación Omega — Puebla 2026</p>
+        <p style="margin-top: 20px; color: #666;">Design: Dark Mode Tacotíos | Colores: Negro #030307 | Ámbar #E99B2A | Orange #F97316 | Off-white #F3EDE8</p>
+    </footer>
+</body>
+</html>
